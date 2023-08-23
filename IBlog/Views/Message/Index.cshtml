@@ -1,0 +1,150 @@
+﻿@using EntityLayer.Concreate;
+
+@model List<ChatViewModel>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/WriterLayout.cshtml";
+}
+
+<head>
+    <link rel="stylesheet" href="~/Chat/css/index.css">
+    <script src="~/Chat/js/index.js"></script>
+    <script src="~/Chat/lib/microsoft/signalr/dist/browser/signalr.min.js"></script>
+    <script src="~/Chat/js/chat.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css">
+    <script src="~/Chat/js/textareaAutosize.js"></script>
+</head>
+    
+
+
+<div class="wrapper">
+    <div class="left">
+
+        <div class="top">
+            @using (Html.BeginForm())
+            {
+                @Html.TextBox("search", "", new { placeholder = "Search" })
+                
+                
+            }
+            
+        </div>
+
+        <ul class="people">
+           
+            @foreach (var c in Model)
+            {
+               
+                    <li class="person" onclick="loadChat('@c.NameSurname')">
+                        @if (c.UserImage == "https://i.hizliresim.com/645lujq.jpg")
+                        {
+                            <img src="@c.UserImage" alt="" />
+                        }
+                        else
+                        {
+                            <img src="/UserPictures/@c.UserImage" alt="" />
+                        }
+
+                        <span class="name">@c.NameSurname</span>
+                        @if (DateTime.Now.Date.ToShortDateString() == @c.LastMessage?.MesajTarih.ToShortDateString())
+                        {
+                            <span class="time">@c.LastMessage?.MesajTarih.ToShortTimeString()</span>
+                        }
+                        else
+                        {
+                            <span class="time">@c.LastMessage?.MesajTarih.ToShortDateString()</span>
+                        }
+
+                        <span class="preview">@c.LastMessage?.Mesaj</span>
+                    </li>
+                
+               
+            }
+          
+        </ul>
+    </div>
+
+    <div class="right">
+        <div id="select-chat-div">
+            <p>Select a recepient...</p>
+        </div>
+        @foreach (var c in Model)
+        {
+            <div class="chat-wrapper" data-recipient="@c.NameSurname">
+                <div id="titleDiv">
+                    <span class="title">
+                        @if (c.UserImage == "https://i.hizliresim.com/645lujq.jpg")
+                        {
+                            <img class="rounded-circle" src="@c.UserImage" alt="" width="30" height="30" />
+                        }
+                        else
+                        {
+                            <img class="rounded-circle" src="/UserPictures/@c.UserImage" alt="" width="30" height="30" />
+                        }
+
+                        @c.NameSurname <i class="fa fa-circle" style="color:limegreen"></i></span>
+                </div>
+
+                <div class="chat">
+                    @{
+                        List<Message> messages = new();
+                        messages.AddRange(c.MyMessages);
+                        messages.AddRange(c.OtherMessages);
+                        foreach (var m in messages.OrderBy(x => x.MesajTarih))
+                        {
+                            if (c.MyMessages.Contains(m))
+                            {
+                                <div class="bubble me">
+                                    <span class="message-text">@m.Mesaj</span>
+                                    @if (DateTime.Now.Date.ToShortDateString() == m.MesajTarih.Date.ToShortDateString())
+                                    {
+                                        <span class="message-time"> @m.MesajTarih.ToShortTimeString()</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="message-time">@(((DateTime)m.MesajTarih).ToString("dd-MMM-yyyy HH:mm")) </span>
+                                        
+                                    }
+                                    
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="bubble other">
+                                    <span class="message-text">@m.Mesaj</span>
+                                    @if (DateTime.Now.Date.ToShortDateString() == m.MesajTarih.Date.ToShortDateString())
+                                    {
+                                        <span class="message-time">@m.MesajTarih.ToShortTimeString()</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="message-time">@(((DateTime)m.MesajTarih).ToString("dd-MMM-yyyy HH:mm")) </span>
+                                    }
+                                    
+                                </div>
+                            }
+                        }
+                    }
+                </div>
+                <br />
+                <div id="writeDiv">
+                    <div class="write">
+                        
+                        <form method="post" action="/Message/SendMessage">
+                        
+                        <input type="hidden" id="NameSurname" value="@User.Identity.Name" />
+                        <input type="hidden" id="to" name="to"  value="@c.RecipientName" />
+                        <textarea id="message-text" name="text"  placeholder="Write a message..."></textarea>
+                        
+                        
+                        <button id="btn-send"  >
+                            <i class="fa fa-paper-plane"></i>
+                        </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+

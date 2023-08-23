@@ -1,0 +1,29 @@
+﻿@using EntityLayer.Concreate
+@model IEnumerable<Blog>
+<div class="tech-btm">
+	<h4>Other blogs by this Writer</h4>
+	@foreach(var x in Model)
+	{
+		
+	
+	<div class="blog-grids row mb-3">
+		<div class="col-md-5 blog-grid-left">
+			<a href="/Blog/BlogDetail/@x.BlogId">
+				<img src="/BlogPictures/@x.BlogResim" class="img-fluid" alt="">
+			</a>
+		</div>
+		<div class="col-md-7 blog-grid-right">
+
+			<h5>
+					<a href="/Blog/BlogDetail/@x.BlogId">@x.BlogBaslik </a>
+			</h5>
+			<div class="sub-meta">
+				<span>
+						<i class="far fa-clock"></i> @(((DateTime)x.OlusturmaTarihi).ToString("dd-MMM-yyyy"))
+				</span>
+			</div>
+		</div>
+
+	</div>
+	}
+</div>

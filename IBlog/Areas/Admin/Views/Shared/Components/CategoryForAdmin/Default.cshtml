@@ -1,0 +1,54 @@
+﻿@using EntityLayer.Concreate
+@model List<Category>
+<div class="content">
+    <div class="animated fadeIn">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <strong class="card-title">Category List</strong>
+                    </div>
+                    <div class="card-body">
+                        <table id="bootstrap-data-table" class="table table-striped table-bordered">
+                            <thead>
+                                <tr>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Category Name</th>
+                                    <th scope="col">Status</th>
+                                    <th scope="col">Blogs</th>
+
+                                </tr>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var x in Model)
+                                {
+                                    <tr>
+                                        <td class="avatar">
+                                            <div class="round-img">
+                                                <a><img class="rounded-circle" src="/CategoryPictures/@x.KategoriResim" width="50" height="50" alt=""></a>
+                                            </div>
+                                        </td>
+                                        <td>@x.KategoriAdi</td>
+                                        <td>@x.Durum</td>
+                                        
+                                        <td>
+                                            <a href="/Admin/Category/getBlogsByCategory/@x.KategoriId" class="btn btn-primary">Blogs</a>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div><!-- .animated -->
+</div><!-- .content -->
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#bootstrap-data-table-export').DataTable();
+    });
+</script>

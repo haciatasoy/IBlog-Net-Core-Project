@@ -1,0 +1,28 @@
+﻿﻿@using EntityLayer.Concreate
+@model List<Blog>
+
+<div class="tech-btm">
+	<h3>Latest Posts</h3>
+	@foreach(var x in Model)
+	{
+	<div class="blog-grids row mb-3">
+		<div class="col-md-5 blog-grid-left">
+			<a href="/Blog/BlogDetail/@x.BlogId">
+				<img src="/BlogPictures/@x.BlogResim" class="card-img-top img-fluid" alt="">
+			</a>
+		</div>
+		<div class="col-md-7 blog-grid-right">
+				<h5 class="text-light"> @x.BlogBaslik </h5>
+			<h6>
+					<a href="/Blog/BlogDetail/@x.BlogId">@x.BlogIcerik.Substring(0, x.BlogIcerik.Substring(0, 45).LastIndexOf(" "))... </a>
+			</h6>
+			<div class="sub-meta">
+				<span>
+						<i class="far fa-clock"></i> @(((DateTime)x.OlusturmaTarihi).ToString("dd-MMM-yyyy"))
+				</span>
+			</div>
+		</div>
+
+	</div>
+	}
+</div>

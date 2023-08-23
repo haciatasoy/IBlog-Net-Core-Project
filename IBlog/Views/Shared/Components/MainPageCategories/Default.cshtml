@@ -1,0 +1,18 @@
+﻿@using EntityLayer.Concreate
+@model List<Category>
+
+<li class="nav-item dropdown">
+	<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true"
+	   aria-expanded="false">
+		Categories
+	</a>
+	<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+		<a class="dropdown-item" href="#"></a>
+		@foreach(var x in Model)
+		{
+			<a class="dropdown-item" href="/Blog/Category/@x.KategoriId"><img class="rounded-circle" src="/CategoryPictures/@x.KategoriResim" width="35" height="35" />&nbsp; @x.KategoriAdi</a>
+		<div class="dropdown-divider"></div>
+		}
+
+	</div>
+</li>

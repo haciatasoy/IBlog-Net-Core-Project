@@ -1,0 +1,16 @@
+﻿@model IEnumerable<IBlog.Models.GroupModel>
+<div class="tech-btm">
+	<h4>Popular Categories</h4>
+	<ul class="list-group single">
+		@foreach(var x in Model)
+		{
+			<li class="list-group-item d-flex justify-content-between align-items-center">
+				<div class="round-img">
+					<img class="rounded-circle" src="/CategoryPictures/@x.Category.KategoriResim" width="35" height="35" >
+				</div>
+				<a href="/Blog/Category/@x.Category.KategoriId">@x.Category.KategoriAdi</a>
+				<span class="badge badge-primary badge-pill">@x.BlogSayi</span>
+			</li>
+		}
+	</ul>
+</div>

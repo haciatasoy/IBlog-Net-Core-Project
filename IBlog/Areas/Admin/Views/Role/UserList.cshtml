@@ -1,0 +1,80 @@
+﻿@model List<EntityLayer.Concreate.AppUser>
+@{
+    ViewData["Title"] = "UserList";
+    Layout = "~/Areas/Admin/Views/Shared/AdminLayout.cshtml";
+}
+
+<h1>Users</h1>
+<br />
+<div class="content">
+    <div class="animated fadeIn">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <strong class="card-title">Blog List</strong>
+                    </div>
+                    <div class="card-body">
+                        <table id="bootstrap-data-table" class="table table-striped table-bordered">
+                            <thead>
+                                <tr>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Username</th>
+                                    <th>Name Surname</th>
+                                    <th>Assigne Role</th>
+
+                                </tr>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var x in Model)
+                                {
+
+                                    <tr>
+                                        @if (x.Image == "https://i.hizliresim.com/645lujq.jpg")
+                                        {
+                                            <td class="avatar">
+                                                <div class="round-img">
+                                                    <a><img class="rounded-circle" src="@x.Image" width="50" height="50" alt=""></a>
+                                                </div>
+                                            </td>
+                                        }
+                                        else
+                                        {
+                                            <td class="avatar">
+                                                <div class="round-img">
+                                                <a><img class="rounded-circle" src="/UserPictures/@x.Image" width="50" height="50" alt=""></a>
+                                                </div>
+                                            </td>
+                                        }
+
+                                        <td>@x.UserName</td>
+                                        <td>@x.NameSurname</td>
+                                        <td>
+                                            <a href="/Admin/Role/AssignRole/@x.Id" class="btn btn-success"><i class="fa fa-address-card" style="color:white"></i> Assign Role</a>
+                                        </td>
+
+                                    </tr>
+
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div><!-- .animated -->
+</div><!-- .content -->
+
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#bootstrap-data-table-export').DataTable();
+    });
+</script>
+
+
+
+

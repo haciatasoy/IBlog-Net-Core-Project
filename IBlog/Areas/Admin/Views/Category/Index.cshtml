@@ -1,0 +1,176 @@
+﻿@model CategoryAddDto
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/AdminLayout.cshtml";
+}
+
+
+<script src="~/lib/jquery/dist/jquery.js"></script>
+
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+<button type="button" class="btn btn-primary mb-1" data-toggle="modal" data-target="#smallmodal">
+    Add New Category
+</button>
+
+<div class="content">
+    <div class="animated fadeIn">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <strong class="card-title">Category List</strong>
+                    </div>
+                    <div class="card-body">
+                        <table id="bootstrap-data-table" class="table table-striped table-bordered">
+                            <thead>
+                                <tr>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Category Name</th>
+                                    <th scope="col">Status </th>
+                                    <th scope="col">Edit</th>
+                                    <th scope="col">Blogs</th>
+
+                                </tr>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var x in Model.Category)
+                                {
+                                    <tr>
+                                        <td class="avatar">
+                                            <div class="round-img">
+                                                <a><img class="rounded-circle" src="/CategoryPictures/@x.KategoriResim" width="50" height="50" alt=""></a>
+                                            </div>
+                                        </td>
+                                        <td>@x.KategoriAdi</td>
+                                        <td>@x.Durum</td>
+                                        <td>
+                                            <a style="color:white" data-toggle="modal" data-target="@("#EditModal-" + x.KategoriId)" data-url="@Url.Action($"/Admin/Category/Update/{x.KategoriId}")" class="btn btn-warning"><i class="fa fa-pencil" style="color:white"></i> Edit</a>
+                                           
+                                            <div class="modal fade" id="EditModal-@x.KategoriId" tabindex="-1" role="dialog" aria-labelledby="EditModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                                            <h4 class="modal-title"><strong>Update Category </strong></h4>
+                                                        </div>
+                                                        <div class="modal-body">
+
+                                                            <form asp-action="Update" method="post" enctype="multipart/form-data">
+                                                                <div class="row">
+                                                                    <div class="col-md-6">
+                                                                        <input type="hidden" value="@x.KategoriId" asp-for="KategoriId" />
+                                                                        <label class="control-label">Category Name</label>
+                                                                        <input type="text" value="@x.KategoriAdi" asp-for="KategoriAdi" class="form-control" required />
+
+                                                                    </div>
+                                                                    <div class="col-md-6">
+                                                                        <div class="form-group">
+                                                                            <label class="form-control-label" for="Image">Kategori Resim</label>
+                                                                            <div class="custom-file">
+                                                                                <input asp-for="KategoriResim" name="KategoriResim" id="KategoriResim" type="file" class="custom-file-input" lang="tr">
+                                                                                <label class="custom-file-label" for="ImageFile">Resim Seç</label>
+                                                                            </div>
+                                                                        </div>
+
+                                                                    </div>
+                                                                </div>
+                                                                <div class="modal-footer">
+                                                                    <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">Close</button>
+                                                                    <button type="submit" class="btn btn-success waves-effect waves-light save-category">Save</button>
+                                                                </div>
+                                                            </form>
+
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <a href="/Admin/Category/getBlogsByCategory/@x.KategoriId" class="btn btn-primary"><i class="fa fa-book" style="color:white"></i> Blogs</a>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div><!-- .animated -->
+</div><!-- .content -->
+
+
+
+
+
+
+
+
+<div class="modal fade" id="smallmodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title"><strong>Add New Category </strong></h4>
+            </div>
+            <div class="modal-body">
+                
+                <form asp-action="AddCategory" method="post" enctype="multipart/form-data">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label class="control-label">Category Name</label>
+                            <input type="text" asp-for="KategoriAdi" class="form-control" placeholder="Enter Category Name" required />
+
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="form-control-label" for="Image">Kategori Resim</label>
+                                <div class="custom-file">
+                                    <input asp-for="KategoriResim" type="file" class="custom-file-input" lang="tr" required>
+                                    <label class="custom-file-label" for="ImageFile">Resim Seç</label>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-success waves-effect waves-light save-category">Save</button>
+                    </div>
+                </form>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+
+<!-- jQuery Modal -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+
+
+<script>
+
+    $(".custom-file-input").on("change", function () {
+        var fileName = $(this).val().split("\\").pop();
+        $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+    });
+</script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#bootstrap-data-table-export').DataTable();
+    });
+</script>
+

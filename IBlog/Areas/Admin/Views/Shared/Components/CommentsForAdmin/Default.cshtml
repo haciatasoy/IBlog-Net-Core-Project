@@ -1,0 +1,66 @@
+﻿@using EntityLayer.Concreate
+@model List<BlogComment>
+<div class="content">
+    <div class="animated fadeIn">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <strong class="card-title">Comment List</strong>
+                    </div>
+                    <div class="card-body">
+                        <table id="bootstrap-data-table" class="table table-striped table-bordered">
+                            <thead>
+                                <tr>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Name Surname</th>
+                                    <th scope="col">Date</th>
+                                    <th scope="col">Blog</th>
+                                    <th scope="col">Comment</th>
+                                    <th scope="col">Point</th>
+                                    <th scope="col">View</th>
+
+                                </tr>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var x in Model)
+                                {
+                                    <tr>
+                                        <td class="avatar">
+                                            <div class="round-img">
+                                                <a><img class="rounded-circle" src="/UserPictures/@x.UserImage" width="50" height="50" alt=""></a>
+                                            </div>
+                                        </td>
+                                        <td>@x.CommentUsername</td>
+                                        <td>@(((DateTime)x.YorumTarih).ToString("dd-MMM-yyyy"))</td>
+                                        <td>@x.Blog.BlogBaslik</td>
+                                        @if (x.Yorum.Length > 30)
+                                        {
+                                            <td>@x.Yorum.Substring(0, x.Yorum.Substring(0, 30).LastIndexOf(" "))...</td>
+                                        }
+                                        else
+                                        {
+                                            <td>@x.Yorum</td>
+                                        }
+                                        <td><i class="fa fa-star" style="color:orange"></i> @x.YorumPuan</td>
+                                        <td>
+                                            <a href="/Blog/BlogDetail/@x.BlogId" class="btn btn-primary"><i class="fa fa-eye"></i> View</a>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div><!-- .animated -->
+</div><!-- .content -->
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#bootstrap-data-table-export').DataTable();
+    });
+</script>

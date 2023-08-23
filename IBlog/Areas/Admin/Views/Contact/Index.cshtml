@@ -1,0 +1,143 @@
+﻿@model ContactViewModel
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/AdminLayout.cshtml";
+}
+
+<h1>Contact</h1>
+<br />
+<div class="col-lg-12">
+    <div class="card">
+        <div class="card-header">
+            <strong class="card-title">Contact Table </strong>
+        </div>
+        <div class="card-body">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Name Surname</th>
+                        <th scope="col">Mail</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">Message</th>
+                        <th scope="col">Send Email</th>
+                        <th scope="col">Delete</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var x in Model.Contact)
+                    {
+                        <tr>
+                            <th scope="row">@x.ContactId</th>
+                            <td>@x.NameSurname</td>
+                            <td>@x.Email</td>
+                            @if (x.IsMailSend == true)
+                            {
+                                <td><span class="badge badge-success">Sent </span> </td>
+                            }
+                            else
+                            {
+                                <td><span class="badge badge-danger">Not Sent</span> </td>
+                            }
+
+                            <td>@x.Mesaj</td>
+                            <td>
+                                <a class="btn btn-warning" data-toggle="modal" data-target="@("#EditModal-" + x.ContactId)" data-url="@Url.Action($"/Admin/Contact/Update/{x.ContactId}")" style="color:white;"><i class="fa fa-paper-plane" style="color:white"></i> Send Mail</a>
+                                <div class="modal fade" id="EditModal-@x.ContactId" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                                <h4 class="modal-title"><strong>Send Email </strong></h4>
+                                            </div>
+                                            <div class="modal-body">
+                                                <form asp-action="SendMail" method="post">
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <input type="hidden" value="@x.ContactId" asp-for="ContactId" />
+                                                            <label class="control-label">Name Surname</label>
+                                                            <input type="text" value="@x.NameSurname" asp-for="NameSurname" class="form-control" disabled />
+                                                        </div>
+                                                        <div class="col-md-6">
+
+                                                            <label class="control-label">User Mail</label>
+                                                            <input type="text" value="@x.Email" asp-for="Email" class="form-control" disabled />
+
+                                                        </div>
+                                                        <div class="col-md-12">
+                                                            <label class="control-label">Content</label>
+                                                            <input type="text" value="@x.Mesaj" asp-for="Mesaj" class="form-control" disabled />
+                                                        </div>
+                                                        
+                                                       
+                                                        <div class="col-md-12">
+                                                            <label class="control-label">Message</label>
+                                                            <textarea class="form-control" rows="5" asp-for="MessageReturn" required></textarea>
+
+                                                        </div>
+                                                        
+                                                        
+                                                     
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">Close</button>
+                                                        <button type="submit" class="btn btn-primary waves-effect waves-light save-category">Send</button>
+                                                    </div>
+                                                </form>
+
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </td>
+                            <td><a class="btn btn-danger" style="color:white" onclick="Delete(@x.ContactId)"><i class="fa fa-trash" style="color:white"></i> Delete</a></td>
+                        </tr>
+                    }
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<div> <h3 class="text-center">There are @Model.Contact.Count record</h3></div>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+
+<!-- jQuery Modal -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
+
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    function Delete(id) {
+        Swal.fire({
+            title: 'Are You Sure !',
+            text: "Do you want to delete this contact?",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, Delete',
+            cancelButtonText: "Cancel",
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    type: "post",
+                    url: "/Admin/Contact/Delete/" + id,
+                    success: function () {
+                        Swal.fire(
+                            'SUCCESS ',
+                            'The transaction is successful',
+                            'success'
+                        )
+                        setTimeout('', 3000);
+                        location.reload();
+                    }
+                });
+            }
+        })
+    }
+</script>

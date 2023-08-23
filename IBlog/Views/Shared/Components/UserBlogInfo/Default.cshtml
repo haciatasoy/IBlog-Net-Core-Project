@@ -1,0 +1,9 @@
+﻿@if (ViewBag.usernamesurname != null)
+{
+
+    <span><a href="/Dashboard/Index/" class="btn btn-success" style="color:white"><i class="fa fa-user" style="color:white"></i> @ViewBag.usernamesurname</a></span>
+}
+else
+{
+    <span>@ViewBag.info</span>
+}

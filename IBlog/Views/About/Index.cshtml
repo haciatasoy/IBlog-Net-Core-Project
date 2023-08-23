@@ -1,0 +1,73 @@
+﻿@using EntityLayer.Concreate
+@model List<About>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/BlogLayout.cshtml";
+}
+
+<section class="main-content-w3layouts-agileits">
+
+	<h3 class="tittle">Contact Us</h3>
+	<p class="sub text-center">We love to discuss your idea</p>
+	
+	@foreach(var x in Model)
+	{		
+	<div class="contact-map inner-sec">
+
+		<iframe src="@x.MapLocation" class="map" width="1515" height="400" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+	</div>
+	<br />
+	<div class="ad-inf-sec bg-light">
+		<div class="container">
+			<div class="address row">
+
+				<div class="col-lg-4 address-grid">
+					<div class="row address-info">
+						<div class="col-md-4 address-left text-center">
+								<i class="fa fa-map" style="color:green;font-size:50px;"></i>
+						</div>
+						<div class="col-md-8 address-right text-left">
+							<h6>Address</h6>
+							<p>
+								@x.Adres
+
+							</p>
+						</div>
+					</div>
+
+				</div>
+				<div class="col-lg-4 address-grid">
+					<div class="row address-info">
+						<div class="col-md-4 address-left text-center">
+								<i class="fa fa-envelope" style="color:red;font-size:50px;"></i>
+						</div>
+						<div class="col-md-8 address-right text-left">
+							<h6>Email</h6>
+							<p>
+								
+									<a href="mailto: @x.Mail"> @x.Mail</a>
+
+							</p>
+						</div>
+
+					</div>
+				</div>
+				<div class="col-lg-4 address-grid">
+					<div class="row address-info">
+						<div class="col-md-4 address-left text-center">
+								<i class="fa fa-mobile-alt" style="color:blue;font-size:50px;"></i>
+						</div>
+						<div class="col-md-8 address-right text-left">
+							<h6>Phone</h6>
+								<p><a href="tel: @x.Telefon">@x.Telefon.Substring(0,4) @x.Telefon.Substring(4,3) @x.Telefon.Substring(7,4)</a></p>
+
+						</div>
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	}
+</section>
+

@@ -1,0 +1,43 @@
+﻿@model AddContactDto
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/BlogLayout.cshtml";
+}
+
+<section class="main-content-w3layouts-agileits">
+
+	<h3 class="tittle">Contact Us</h3>
+	<p class="sub text-center">Görüşleriniz bizim için çok önemli</p>
+	
+	
+	<div class="container">
+
+		<form action="" method="post">
+
+			
+				<div class="form-group">
+					<label>Name</label>
+					<input class="form-control" style="border-color:purple" type="text" asp-for="NameSurname" placeholder="Name Surname" required="">
+				</div>
+				<div class="form-group">
+					<label >Email</label>
+				<input class="form-control" style="border-color:red" type="email" asp-for="Email" placeholder="Email" required="">
+				</div>
+
+				<div class="form-group">
+				<label >Message</label>
+				
+				<textarea id="textarea" class="form-control" style="border-color:dodgerblue" rows="5" asp-for="Mesaj" placeholder="Message" required=""></textarea>
+				</div>
+				@*<a class="form-control" style="color:white; width:800px;;"><i class="fa fa-paper-plane "></i>&nbsp; Gönder</a>*@
+			<button class="form-control" style="background-color:forestgreen;color:white;border-color:yellow;"><i class="fa fa-paper-plane "></i>&nbsp; Gönder</button>
+		
+
+		</form>
+
+	</div>
+</section>
+
+
+<br />
+

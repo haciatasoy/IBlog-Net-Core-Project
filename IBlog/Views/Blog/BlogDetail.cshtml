@@ -1,0 +1,158 @@
+﻿@using EntityLayer.Concreate
+@model IEnumerable<Blog>
+@{
+    ViewData["Title"] = "BlogDetail";
+    Layout = "~/Views/Shared/BlogLayout.cshtml";
+}
+
+
+<section class="banner-bottom">
+	<!--/blog-->
+	<div class="container">
+		<div class="row">
+			<!--left-->
+			<div class="col-lg-8 left-blog-info-w3layouts-agileits text-left">
+				@foreach(var x in Model)
+				{
+					
+				
+				<div class="blog-grid-top">
+					<div class="b-grid-top">
+						<div class="blog_info_left_grid">
+							<a >
+								<img src="/BlogPictures/@x.BlogResim" class="img-fluid" alt="">
+							</a>
+						</div>
+						<div class="blog-info-middle">
+							<ul>
+								<li>
+									<a href="#">
+											<i class="fa fa-calendar" style="color:red"></i> @(((DateTime)x.OlusturmaTarihi).ToString("dd-MMM-yyyy"))
+									</a>
+								</li>
+								<li>
+										@if (ViewBag.blogpuan != null)
+										{
+											<a href="#">
+												<i class="fa fa-star" style="color:orange"></i> @string.Format("{0:#,0.0}",ViewBag.blogpuan)
+											</a>
+										}
+										else
+										{
+											<a href="#">
+												<i class="fa fa-star" style="color:orange"></i> 0
+											</a>
+										}
+
+								</li>
+								<li>
+									<a href="#">
+											<i class="fa fa-comment" style="color:blue"></i> @ViewBag.commentcount
+									</a>
+								</li>
+									<li>
+										<a href="/Blog/Writer/@x.AppUserId">
+											<i class="fa fa-user" style="color:forestgreen"></i> @x.AppUser.NameSurname
+										</a>
+									</li>
+									<li>
+										<a href="/Blog/Category/@x.CategoryId">
+											<i class="fa fa-list" style="color:mediumpurple"></i> @x.Category.KategoriAdi
+										</a>
+									</li>
+
+							</ul>
+						</div>
+					</div>
+
+					<h3>
+						<a href="single.html">@x.BlogBaslik </a>
+					</h3>
+					<p>
+						@x.BlogIcerik
+					</p>
+					
+				</div>
+
+
+
+					<div class="col-lg-12">
+						<div class="card">
+							<div class="card-header">
+								<h4>Comments</h4>
+							</div>
+							<div class="card-body">
+								
+
+								<ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+									<li class="nav-item">
+										<a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true">Order By Date</a>
+									</li>
+									<li class="nav-item">
+										<a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#pills-profile" role="tab" aria-controls="pills-profile" aria-selected="false">Most Liked</a>
+									</li>
+									<li class="nav-item">
+										<a class="nav-link" id="pills-contact-tab" data-toggle="pill" href="#pills-contact" role="tab" aria-controls="pills-contact" aria-selected="false">Least Liked</a>
+									</li>
+								</ul>
+								<div class="tab-content" id="pills-tabContent">
+									<div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+										@await Component.InvokeAsync("CommentListByBlog", new { id = ViewBag.i })
+									</div>
+									<div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
+										@await Component.InvokeAsync("CommentListOrderDesc", new { id = ViewBag.i })
+										
+									</div>
+									<div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">
+										@await Component.InvokeAsync("CommentListOrderAsc", new { id = ViewBag.i })
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+						
+						
+					
+					
+
+						
+
+					
+				
+
+					
+					<br />
+				<div class="comment-top">
+					<h4>Bir Yorum Bırak...</h4>
+					<br/>
+						@await Component.InvokeAsync("AddComment",new {id=ViewBag.i})
+				</div>
+				}
+			</div>
+
+			
+			<aside class="col-lg-4 agileits-w3ls-right-blog-con text-right">
+				<div class="right-blog-info text-left">
+					@*<div class="tech-btm">
+						<img src="images/banner1.jpg" class="img-fluid" alt="">
+					</div>
+					<div class="tech-btm">
+						<h4>Sign up to our newsletter</h4>
+						<p>Pellentesque dui, non felis. Maecenas male </p>
+						<form action="#" method="post">
+							<input type="email" placeholder="Email" required="">
+							<input type="submit" value="Subscribe">
+						</form>
+
+					</div>*@
+					@await Component.InvokeAsync("PopularCategories")
+					@await Component.InvokeAsync("WritersBlogs",new { id = ViewBag.WriterId,blogid=ViewBag.i })
+					
+					@await Component.InvokeAsync("CategoryBlogs",new {CategoryId=ViewBag.CategoryId,blogid=ViewBag.i})
+				</div>
+
+			</aside>
+			<!--//right-->
+		</div>
+	</div>
+</section>

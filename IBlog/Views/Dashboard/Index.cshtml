@@ -1,0 +1,90 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/WriterLayout.cshtml";
+}
+
+
+    <div class="content-wrapper">
+        
+        <div class="row">
+            <div class="col-md-4 stretch-card grid-margin">
+                <div class="card bg-gradient-danger card-img-holder text-white">
+                    <div class="card-body">
+                        <img src="~/writer/assets/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image" />
+                        <h4 class="font-weight-normal mb-3">
+                            My Blogs <i class="mdi mdi-book mdi-24px float-right"></i>
+                        </h4>
+                        <h2 class="mb-5">@ViewBag.blog</h2>
+                        @*<h6 class="card-text">Increased by 60%</h6>*@
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 stretch-card grid-margin">
+                <div class="card bg-gradient-info card-img-holder text-white">
+                    <div class="card-body">
+                        <img src="~/writer/assets/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image" />
+                        <h4 class="font-weight-normal mb-3">
+                            My Messages <i class="mdi mdi-message mdi-24px float-right"></i>
+                        </h4>
+                    <h2 class="mb-5">@ViewBag.messages</h2>
+                        @*<h6 class="card-text">Decreased by 10%</h6>*@
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 stretch-card grid-margin">
+                <div class="card bg-gradient-success card-img-holder text-white">
+                    <div class="card-body">
+                        <img src="~/writer/assets/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image" />
+                        <h4 class="font-weight-normal mb-3">
+                            My Comments <i class="mdi mdi-comment mdi-24px float-right"></i>
+                        </h4>
+                        <h2 class="mb-5">@ViewBag.comments</h2>
+                        @*<h6 class="card-text">Increased by 5%</h6>*@
+                    </div>
+                </div>
+            </div>
+        </div>
+    <div class="row">
+
+        <div class="col-12 grid-margin">
+            <div id="chartdiv" style="width:800px; height:600px">
+                <h3> Chart Alanı </h3>
+            </div>
+        </div>
+        
+    </div>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+        google.charts.load('current', { 'packages': ['corechart'] });
+        google.charts.setOnLoadCallback(DrawonLoad);
+        function DrawonLoad() {
+            $(function () {
+                $.ajax({
+                    type: 'GET',
+                    url: '/Dashboard/VisualizeBlogResult/',
+                    success: function (chartsdata) {
+                        var Data = chartsdata.jsonlist;
+                        var data = new google.visualization.DataTable();
+                        
+                        data.addColumn('string', 'categoryname');
+                        
+                        data.addColumn('number', 'categorycount');
+                        for (var i = 0; i < Data.length; i++) {
+                            data.addRow([Data[i].categoryname, Data[i].categorycount]);
+                        }
+                        var chart = new google.visualization.PieChart(document.getElementById('chartdiv'));
+                        chart.draw(data, {
+                            title: "My Blogs-Category Count",
+                            position: "top",
+                            fontsize: "16px"
+                        });
+                    }
+                });
+            })
+        }
+    </script>
+        
+    </div>
+
+

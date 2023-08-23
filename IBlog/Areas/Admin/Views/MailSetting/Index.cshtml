@@ -1,0 +1,121 @@
+﻿@model MailSettingModel
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/AdminLayout.cshtml";
+}
+
+<h1>Mail Seettings</h1>
+<br />
+<div class="col-lg-12">
+    <div class="card">
+        <div class="card-header">
+            <strong class="card-title">Mail Settings Table </strong>
+        </div>
+        <div class="card-body">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">SMTP Mail</th>
+                        <th scope="col">Port</th>
+                        <th scope="col">User Mail</th>
+                        <th scope="col">Edit</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var x in Model.MailSetting)
+                    {
+                        <tr>
+                            <th scope="row">@x.Id</th>
+                            <td>@x.SmtpMail</td>
+                            <td>@x.Port</td>
+                            <td>@x.Usermail</td>
+                            <td>
+                                <a class="btn btn-warning" data-toggle="modal" data-target="@("#EditModal-" + x.Id)" data-url="@Url.Action($"/Admin/MailSetting/Update/{x.Id}")" style="color:white;"><i class="fa fa-pencil" style="color:white"></i> Edit</a>
+                                <div class="modal fade" id="EditModal-@x.Id" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                                <h4 class="modal-title"><strong>Update Mail Settings </strong></h4>
+                                            </div>
+                                            <div class="modal-body">
+                                                <form asp-action="Update" method="post">
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <input type="hidden" value="@x.Id" asp-for="Id" />
+                                                            <label class="control-label">SMTP Mail</label>
+                                                            <input type="text" value="@x.SmtpMail" asp-for="SmtpMail" class="form-control" />
+
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <label class="control-label">UserMail</label>
+                                                            <input type="text" value="@x.Usermail" asp-for="Usermail" class="form-control" />
+
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <label class="control-label">Port</label>
+                                                            <input type="text" value="@x.Port" asp-for="Port" class="form-control" />
+
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <label class="control-label">Password</label>
+                                                            <input type="text" value="@x.Password" asp-for="Password" class="form-control" />
+
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <label class="control-label">Enable SSL</label>
+                                                            @if (x.EnableSsl == true)
+                                                            {
+                                                                <input type="checkbox"  asp-for="EnableSsl" class="form-control" checked/>
+                                                            }
+                                                            else
+                                                            {
+                                                                <input type="checkbox"  asp-for="EnableSsl" class="form-control" />
+                                                            }
+
+
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <label class="control-label">Enable Cred.</label>
+                                                            @if (x.EnableCred == true)
+                                                            {
+                                                                <input type="checkbox"  asp-for="EnableCred" class="form-control" checked/>
+                                                            }
+                                                            else
+                                                            {
+                                                                <input type="checkbox"  asp-for="EnableCred" class="form-control" />
+                                                            }
+
+
+                                                        </div>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">Close</button>
+                                                        <button type="submit" class="btn btn-success waves-effect waves-light save-category">Save</button>
+                                                    </div>
+                                                </form>
+
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </td>
+                        </tr>
+                    }
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<div> <h3 class="text-center">There are @Model.MailSetting.Count record</h3></div>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+
+<!-- jQuery Modal -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>

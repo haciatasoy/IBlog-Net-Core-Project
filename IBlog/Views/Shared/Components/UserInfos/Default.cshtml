@@ -1,0 +1,14 @@
+﻿<div class="nav-profile-img">
+    @if (ViewBag.photo != null)
+    {
+        <img src="@ViewBag.photo" alt="profile">
+    }
+    else
+    {
+        <img src="/UserPictures/@ViewBag.photomain" alt="profile">
+    }
+    <span class="availability-status online"></span>
+</div>
+<div class="nav-profile-text">
+    <p class="mb-1 text-black">@ViewBag.name</p>
+</div>

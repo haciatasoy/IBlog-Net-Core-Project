@@ -1,0 +1,29 @@
+﻿@model List<EntityLayer.Concreate.AppUser>
+
+<li class="nav-item dropdown">
+	<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true"
+	   aria-expanded="false">
+		Writers
+	</a>
+	<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+		@foreach(var x in Model)
+		{
+			<a class="dropdown-item" href="#"></a>
+			<a class="dropdown-item" href="/Blog/Writer/@x.Id ">
+				@if (x.Image == "https://i.hizliresim.com/645lujq.jpg")
+				{
+					<img class="rounded-circle" src="@x.Image" width="35" height="35" />
+				}
+				else
+				{
+					<img class="rounded-circle" src="/UserPictures/@x.Image" width="35" height="35" />
+				}
+				
+				&nbsp;  @x.NameSurname</a>
+			<div class="dropdown-divider"></div>
+
+		}
+		
+
+	</div>
+</li>
