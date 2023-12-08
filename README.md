@@ -25,6 +25,10 @@ USER'S UPDATE PROFILE:
 ADMIN HOME:
 ![adminpanel](https://github.com/haciatasoy/IBlog-Net-Core-Project/assets/137705945/cf064d05-4855-4f68-9eb9-ecdfcb45a150)
 
+ADMIN EXCEL:
+![excel](https://github.com/haciatasoy/IBlog-Net-Core-Project/assets/137705945/589f9d66-708c-4487-bb49-8b00553e7d37)
+
+
 ADMIN ABOUT:
 ![admin about](https://github.com/haciatasoy/IBlog-Net-Core-Project/assets/137705945/06227d18-59eb-43f2-a87f-bf11e5330cf5)
 ADMIN CONTACTS:
