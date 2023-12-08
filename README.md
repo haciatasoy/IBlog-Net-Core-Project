@@ -15,6 +15,9 @@ USER' MESSAGE:
 ![mesaj](https://github.com/haciatasoy/IBlog-Net-Core-Project/assets/137705945/ea26e031-12b3-485c-ae94-2a2f6127d3ae)
 USER'S UPDATE PROFILE:
 ![profil](https://github.com/haciatasoy/IBlog-Net-Core-Project/assets/137705945/0a30277a-e9bb-4d3a-9ecd-69dd0b4bca16)
+2FA :
+![login twofactor](https://github.com/haciatasoy/IBlog-Net-Core-Project/assets/137705945/2dd61963-4ce8-4383-9b65-14bc28fe3063)
+
 ADMIN HOME:
 ![adminpanel](https://github.com/haciatasoy/IBlog-Net-Core-Project/assets/137705945/cf064d05-4855-4f68-9eb9-ecdfcb45a150)
 
