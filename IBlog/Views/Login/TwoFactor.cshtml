@@ -1,0 +1,40 @@
+﻿@model TwoFactorLogin
+@{
+    ViewData["Title"] = "TwoFactor";
+    Layout = "~/Views/Shared/BlogLayout.cshtml";
+}
+
+<section class="main-content-w3layouts-agileits">
+	<div class="container">
+		<h3 class="tittle">Sign In Now</h3>
+		<div class="row inner-sec">
+			<div class="login p-5 bg-light mx-auto mw-100">
+				@if (ViewData["ErrorMessage"] != null)
+				{
+					<div class="alert" id="alert">
+						<strong><i class="mdi mdi-alert"></i> OOOPSSS!</strong> @ViewData["ErrorMessage"]
+					</div>
+				}
+				<form asp-action="TwoFactor" method="post">
+					<div class="form-group">
+						<label for="exampleInputEmail1 mb-2">Username</label>
+						<input type="text" asp-for="VerifyCode" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" required="">
+
+					</div>
+					
+					<div class="form-check mb-2">
+						<input type="checkbox" asp-for="Recovery" class="form-check-input" id="exampleCheck1">
+						<label class="form-check-label" for="exampleCheck1">Check this box to log in with the recovery code. </label>
+
+					</div>
+					<button type="submit" class="btn btn-primary submit mb-4">Sign In</button>
+					<p><a href="~/Register/Index/"> Don't have an account?</a></p>
+					<br />
+					<p><a href="~/Login/ForgotPassword/"> Forgot Password</a></p>
+				</form>
+			</div>
+		</div>
+	</div>
+</section>
+
+

@@ -73,7 +73,7 @@ builder.Services.Configure<IdentityOptions>(options =>
 }
 );
 
-
+builder.Services.AddScoped<AuthenticatorService, AuthenticatorService>();
 
 
 builder.Services.AddHttpClient();

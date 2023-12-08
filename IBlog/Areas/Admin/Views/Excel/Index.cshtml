@@ -1,0 +1,48 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/AdminLayout.cshtml";
+}
+
+<head>
+    <style>
+        .akerdion {
+            border: 1px solid #999;
+            border-radius: 5px;
+            margin: 2px;
+            padding: 1.04%;
+        }
+
+        .ozet {
+            border-radius: 5px;
+            cursor: pointer;
+            margin: -1%;
+            padding: 8px 10px;
+            background: -webkit-linear-gradient(top, #f3f3f3 50%, #e6e6e6 50%);
+        }
+    </style>
+</head>
+<body>
+   
+    <details class="akerdion">
+        <summary class="ozet">Notification Excel Import</summary>
+        <br />
+        <form asp-controller="Excel" asp-action="UploadExcel" enctype="multipart/form-data">
+            <input type="file" name="file" required="" lang="en" />
+            <button type="submit" class="btn btn-success"><i class="fa fa-upload"></i> Upload Excel</button>
+         </form>
+    </details>
+
+    <details class="akerdion">
+        <summary class="ozet">Blog Export</summary>
+        <br />
+        <a href="/Admin/Excel/ExcelBlogEvent" class="btn btn-success"> <i class="fa fa-download"></i> Blog Excel İndir</a>
+    </details>
+
+    <details class="akerdion">
+        <summary class="ozet">Excel Tabs</summary>
+        <br />
+        <p>This page for Excel operations!</p>
+    </details>
+</body>
+

@@ -35,7 +35,7 @@ namespace BusinessLayer.Concretae
 
         public void Insert(Notification t)
         {
-            throw new NotImplementedException();
+            NotificationDal.Add(t);
         }
 
         public List<Notification> TGetAll3Last()

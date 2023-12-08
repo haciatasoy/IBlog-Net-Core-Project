@@ -27,36 +27,72 @@ namespace IBlog.Controllers
 		}
 
 		[HttpGet]
-		public IActionResult Index()
+		public IActionResult Index(string ReturnUrl = "")
 		{
 			return View();
 		}
 		[HttpPost]
-		public async Task<IActionResult> Index(LoginViewDto model)
+		public async Task<IActionResult> Index(string ReturnUrl, LoginViewDto model)
 		{
-			var result=await signInManager.PasswordSignInAsync(model.Username,model.Password,model.RememberMe,true);
-			if (result.Succeeded)
+			AppUser user = await userManager.FindByNameAsync(model.Username);
+			Microsoft.AspNetCore.Identity.SignInResult result = await signInManager.PasswordSignInAsync(user,model.Password,model.RememberMe,true);
+			if (user.EmailConfirmed == false)
 			{
-				var user=await userManager.FindByNameAsync(model.Username);
-				
-			    if(user.EmailConfirmed == true)
-				{
-					return RedirectToAction("Index", "Dashboard");
-				}
-				else
-				{
-					ViewData["ErrorMessage"] = "Invalid User";
-					return View();
-				}
+				ViewData["ErrorMessage"] = "Invalid User";
+				return View();
 			}
 			else
 			{
-				ViewData["ErrorMessage"] = "Kullanıcı adı veya parola yanlış!";
-				return View();
+				if (result.Succeeded)
+				{
+
+					
+						if (string.IsNullOrEmpty(ReturnUrl))
+							return RedirectToAction("Index", "Dashboard");
+						return Redirect(ReturnUrl);	
+
+				}
+				else if (result.RequiresTwoFactor)
+					return RedirectToAction("TwoFactor", new { ReturnUrl = ReturnUrl });
+				else
+				{
+					ViewData["ErrorMessage"] = "Kullanıcı adı veya parola yanlış!";
+					return View();
+				}
 			}
+			
+			
+		}
+		[HttpGet]
+		public async Task <IActionResult> TwoFactor()
+		{
 			return View();
 		}
-		public async Task<IActionResult> SignOut()
+		[HttpPost]
+        public async Task<IActionResult> TwoFactor(TwoFactorLogin model)
+        {
+			AppUser user = await signInManager.GetTwoFactorAuthenticationUserAsync();
+			Microsoft.AspNetCore.Identity.SignInResult result = null;
+			if (model.Recovery)
+			{
+				result = await signInManager.TwoFactorRecoveryCodeSignInAsync(model.VerifyCode);
+			}
+			else
+			{
+				result = await signInManager.TwoFactorAuthenticatorSignInAsync(model.VerifyCode, true, false);
+			}
+			if (result.Succeeded)
+			{
+				return RedirectToAction("Index", "Dashboard");
+			}
+			else
+			{
+				ViewData["ErrorMessage"] = "Doğrulama kodu yanlış!";
+				return View();
+			}
+            return View();
+        }
+        public async Task<IActionResult> SignOut()
 		{
 			await signInManager.SignOutAsync();
 			return RedirectToAction("Index");
